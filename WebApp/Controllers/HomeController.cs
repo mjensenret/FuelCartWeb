@@ -43,7 +43,7 @@ namespace WebApp.Controllers
 
         [AllowAnonymous]
         [HttpPost("LoadCartStatus", Name ="LoadCartStatus")]
-        [ProducesResponseType(typeof(CartStatus), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CartStatusViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult LoadCartStatus()
         {

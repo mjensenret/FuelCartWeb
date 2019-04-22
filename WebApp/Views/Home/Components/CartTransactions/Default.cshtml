@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebApp.ViewModels.CartTransactionViewModel>
+@(Html.DevExtreme().DataGrid<WebApp.ViewModels.CartTransactionViewModel>()
+        .ID("cartTransactions")
+        .ShowBorders(true)
+        .ColumnHidingEnabled(true)
+        .ColumnAutoWidth(true)
+        .RepaintChangesOnly(true)
+        .HighlightChanges(true)
+        .FilterRow(f => f
+            .Visible(true)
+            .ApplyFilter(GridApplyFilterMode.Auto)
+        )
+        .Export(e => e
+            .Enabled(true)
+            .FileName("Transactions"))
+        .Grouping(g => g
+            .ContextMenuEnabled(true)
+            .ExpandMode(GridGroupingExpandMode.RowClick)
+        )
+        .GroupPanel(p => p
+            .EmptyPanelText("Use the context menu of header columns to group data")
+            .Visible(true)
+        )
+        .SearchPanel(searchPanel => searchPanel
+            .Visible(true)
+            .Width(240)
+            .Placeholder("Search...")
+        )
+        .Columns(c =>
+        {
+            c.AddFor(m => m.CartId).Visible(false);
+            c.AddFor(m => m.CartName)
+                .HidingPriority(20);
+            c.AddFor(m => m.TransactionId)
+                .HidingPriority(19);
+            c.AddFor(m => m.OrderId)
+                .HidingPriority(18);
+            c.AddFor(m => m.SequenceId)
+                .HidingPriority(17);
+            c.AddFor(m => m.OperatorId)
+                .HidingPriority(16);
+            c.AddFor(m => m.StartDateTime)
+                .Format(Format.ShortDateShortTime)
+                .HidingPriority(12);
+            c.AddFor(m => m.EndDateTime)
+                .Format(Format.ShortDateShortTime)
+                .HidingPriority(13);
+            c.AddFor(m => m.IVVolume)
+                .HidingPriority(11);
+            c.AddFor(m => m.GVVolume)
+                .HidingPriority(15);
+            c.AddFor(m => m.GSTVolume)
+                .HidingPriority(14);
+            c.AddFor(m => m.GSVVolume)
+                .HidingPriority(10);
+            c.AddFor(m => m.IVTotalizer)
+                .HidingPriority(9);
+            c.AddFor(m => m.GVTotalizer)
+                .HidingPriority(8);
+            c.AddFor(m => m.GSTTotalizer)
+                .HidingPriority(7);
+            c.AddFor(m => m.GSVTotalizer)
+                .HidingPriority(6);
+            c.AddFor(m => m.AvgMeterFactor)
+                .HidingPriority(5);
+            c.AddFor(m => m.AvgTemperature)
+                .HidingPriority(4);
+            c.AddFor(m => m.AvgPressure)
+                .HidingPriority(3);
+            c.AddFor(m => m.AvgDensity)
+                .HidingPriority(2);
+            c.AddFor(m => m.CTL)
+                .HidingPriority(1);
+            c.AddFor(m => m.CPL)
+                .HidingPriority(0);
+        })
+        .Visible(true)
+        .OnInitialized("LoadCartModel")
+        .DataSource(Model)
+
+)

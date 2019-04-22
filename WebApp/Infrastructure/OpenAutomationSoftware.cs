@@ -35,7 +35,7 @@ namespace WebApp.Infrastructure
         private IHubContext<FuelCartHub> _hubContext;
         private FuelCartDBContext _dbContext;
         private IConfiguration _configuration;
-        private List<CartStatus> carts = new List<CartStatus>();
+        private List<CartStatusViewModel> carts = new List<CartStatusViewModel>();
 
         public OpenAutomationSoftware(IHubContext<FuelCartHub> fuelCartHub, FuelCartDBContext context, IConfiguration config)
         {
@@ -47,7 +47,7 @@ namespace WebApp.Infrastructure
             var cartList = _dbContext.FuelCarts;
             foreach(var c in cartList)
             {
-                carts.Add(new CartStatus { CartId = c.CartId, CartName = c.CartName, OASGroup = c.OASGroupName, Status = "Initializing" });
+                carts.Add(new CartStatusViewModel { CartId = c.CartId, CartName = c.CartName, OASGroup = c.OASGroupName, Status = "Initializing" });
             }
 
         }
@@ -117,7 +117,7 @@ namespace WebApp.Infrastructure
                 tagQualities = allTagValues.Qualities;
                 tagTimeStamps = allTagValues.TimeStamps;
                 numberOfTags = tagNames.GetLength(0);
-                CartStatus cartStatus = new CartStatus();
+                CartStatusViewModel cartStatus = new CartStatusViewModel();
                 string value = null;
                 for (tagIndex = 0; tagIndex < numberOfTags; tagIndex++)
                 {
