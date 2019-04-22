@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-WebApp-B0373E1D-424D-4AF1-82A9-DBB5EEA1ABC9</UserSecretsId>
+    <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20190403193904_changeRegisterHead.cs" />
+    <Compile Remove="Migrations\20190403193904_changeRegisterHead.Designer.cs" />
+    <Compile Remove="Migrations\20190404205652_addTransactionTable.cs" />
+    <Compile Remove="Migrations\20190404205652_addTransactionTable.Designer.cs" />
+    <Compile Remove="Migrations\20190411144456_modifyTransactions.cs" />
+    <Compile Remove="Migrations\20190411144456_modifyTransactions.Designer.cs" />
+    <Compile Remove="Migrations\20190411144947_addTransactionTable.cs" />
+    <Compile Remove="Migrations\20190411144947_addTransactionTable.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="18.2.7" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OASConfig">
+      <HintPath>..\..\..\..\Downloads\OASCore\OASConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="OASData">
+      <HintPath>..\..\..\..\Downloads\OASCore\OASData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

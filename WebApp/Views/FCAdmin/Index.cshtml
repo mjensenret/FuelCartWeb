@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "Fuel Cart Admin";
+}
+
+<h3>Add/Update Fuel Carts</h3>
+
+<div class="row">
+    <div class="col-sm-12">
+        @(Html.DevExtreme().DataGrid<FuelCartModel>()
+                    .ID("cartList")
+                    .DataSource(d => d.Mvc()
+                    .Controller("FuelCartAPI")
+                    .LoadAction("GetFuelCarts")
+                    .Key("CartId")
+                    .InsertAction("AddCart")
+                    .DeleteAction("DeleteCart")
+                    .UpdateAction("UpdateCart")
+                    )
+                    .Editing(e => e
+                        .Mode(GridEditMode.Cell)
+                        .AllowAdding(true)
+                        .AllowUpdating(true)
+                        .AllowDeleting(true)
+                        .UseIcons(true)
+                    )
+                    .Columns(c =>
+                    {
+                        c.AddFor(m => m.CartName);
+                        c.AddFor(m => m.OASGroupName);
+                        c.AddFor(m => m.HeadTypeId)
+                            .Lookup(lookup => lookup
+                                .DataSource(d => d.Mvc().Controller("FuelCartAPI").LoadAction("GetHeadTypes").Key("Id"))
+                                .DisplayExpr("Type")
+                                .ValueExpr("Id")
+                            );
+
+                    })
+        )
+    </div>
+</div>
+<script>
+    function beforeSend(operation, ajaxSettings) {
+        var data = ajaxSettings.data || {},
+            args = Object.keys(data).map(function (key) {
+            return key + "=" + data[key];
+        }).join(" ");
+    }
+</script>
+
+

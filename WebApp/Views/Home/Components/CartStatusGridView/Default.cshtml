@@ -1,0 +1,19 @@
+﻿@(Html.DevExtreme().DataGrid<WebApp.ViewModels.CartStatus>()
+    .ID("cartStatus")
+    .ShowBorders(true)
+    .RepaintChangesOnly(true)
+    .HighlightChanges(true)
+    .Columns(c =>
+    {
+        c.AddFor(m => m.CartId).DataField("cartId").Visible(false);
+        c.AddFor(m => m.CartName).DataField("cartName");
+        c.AddFor(m => m.OASGroup).DataField("oasGroup");
+        c.AddFor(m => m.Status).DataField("status");
+        c.AddFor(m => m.GrossVolume).DataField("grossVolume");
+        c.AddFor(m => m.NetVolume).DataField("netVolume");
+
+    })
+    .Visible(true)
+    .OnInitialized("LoadCartModel")
+
+)
