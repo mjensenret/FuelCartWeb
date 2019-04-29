@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace WebApp.Infrastructure
         internal static bool m_InProcessValues = false;
         internal static bool m_closing = false;
         internal static string DataType = "Grid";
+        public static bool pageLoaded = false;
 
 
         // A Queue or Hashtable is recommended to receieve your values so they can be processed on a seperate thread.
@@ -43,13 +45,13 @@ namespace WebApp.Infrastructure
             _dbContext = context;
             _configuration = config;
             oasData.ValuesChangedAll += OasData_ValuesChangedAll;
-            _timer = new Timer(ProcessQueue, null, _updateInterval, _updateInterval);
+            _timer = new Timer(ProcessQueue, null, Timeout.Infinite, Timeout.Infinite);
             var cartList = _dbContext.FuelCarts;
             foreach(var c in cartList)
             {
                 carts.Add(new CartStatusViewModel { CartId = c.CartId, CartName = c.CartName, OASGroup = c.OASGroupName, Status = "Initializing" });
             }
-
+            pageLoaded = false;
         }
 
         private void OasData_ValuesChangedAll(string[] Tags, object[] Values, bool[] Qualities, DateTime[] TimeStamps)
@@ -143,7 +145,6 @@ namespace WebApp.Infrastructure
                         {
                             UpdateCartStatus();
                             //_hubContext.Clients.All.SendAsync("updateCartStatus", new CartStatus {  })
-                            Console.WriteLine("StatusKey");
                         }
 
                         //if (DataType == "Grid")
@@ -252,6 +253,7 @@ namespace WebApp.Infrastructure
 
         private void UpdateCartStatus()
         {
+            Debug.WriteLine("UpdateCartStatus");
             foreach (var c in carts)
             {
                 if (m_DataValuesHashtable.ContainsKey(c.OASGroup + ".Status.Value"))
@@ -270,8 +272,10 @@ namespace WebApp.Infrastructure
             }
         }
 
-        public void LoadCartStatus()
+        public List<CartStatusViewModel> LoadCartStatus()
         {
+            Debug.WriteLine("LoadCartStatus");
+
             List<TagList> tagList = new List<TagList>();
             var networkNode = _configuration.GetValue<string>("OASServer");
 
@@ -287,6 +291,9 @@ namespace WebApp.Infrastructure
 
             }
             _hubContext.Clients.All.SendAsync("loadCartStatus", carts);
+
+            _timer.Change(_updateInterval, _updateInterval);
+            return carts;
         }
 
         public void AddTags(string groupName, string networkNode)
@@ -307,8 +314,7 @@ namespace WebApp.Infrastructure
                     .ToArray();
             }
 
-            oasData.AddTags(values);
-            
+            oasData.AddTags(values);            
 
         }
 

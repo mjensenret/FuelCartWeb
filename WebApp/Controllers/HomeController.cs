@@ -37,45 +37,25 @@ namespace WebApp.Controllers
         {
             //var fcGroups = _context.FuelCarts.Select(x => x.OASGroupName).ToList();
             //var networkNode = _configuration.GetValue<string>("OASServer");
+            //_oasInterface.LoadCartStatus();
 
             return View();
         }
 
         [AllowAnonymous]
-        [HttpPost("LoadCartStatus", Name ="LoadCartStatus")]
+        [HttpPost("LoadCartModel", Name = "LoadCartModel")]
         [ProducesResponseType(typeof(CartStatusViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult LoadCartStatus()
         {
-            //var cartList = _context.FuelCarts.ToList();
-
-            //var cartModel = cartList
-            //    .Select(x => new
-            //    {
-            //        x.CartId,
-            //        x.CartName,
-            //        x.OASGroupName
-            //    })
-            //    .ToList()
-            //    .Select(y => new CartStatus()
-            //    {
-            //        CartId = y.CartId,
-            //        CartName = y.CartName,
-            //        OASGroup = y.OASGroupName,
-            //        Status = "Initializing..."
-            //    })
-            //    .ToList();
-
-            //if (cartModel == null)
-            //    return NotFound();
             _oasInterface.LoadCartStatus();
             return RedirectToAction("Index");
         }
 
-        public void LoadCarts()
-        {
-            _oasInterface.LoadCartStatus();
-        }
+        //public void LoadCarts()
+        //{
+        //    _oasInterface.LoadCartStatus();
+        //}
 
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

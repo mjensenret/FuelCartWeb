@@ -8,17 +8,23 @@ var connection = new signalR.HubConnectionBuilder()
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
-var cartStatusStore;
 
-$(function () {
-   
+
+$( function () {
+    window.console.log(connection);
+    var cartStatusStore;
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
     connection.on("loadCartStatus", function (carts) {
         window.console.log("status....");
         cartStatusStore = new DevExpress.data.CustomStore({
-            key: "cartId",
             load: function () {
                 return carts;
-            }
+            },
+            key: "cartId"
         });
         $("#cartStatus").dxDataGrid({
             dataSource: cartStatusStore
@@ -30,22 +36,22 @@ $(function () {
         cartStatusStore.push([{ type: "update", key: cartStatus.cartId, data: cartStatus }]);
     });
 
-    connection.start().catch(function (err) {
-        return console.error(err.toString());
-    });
+
+    LoadCartModel();
 });
 
 function LoadCartModel() {
     $.ajax({
         type: "POST",
-        url: "/LoadCartStatus",
+        url: "/LoadCartModel",
         success: function (result) {
-            window.console.log("success");
+            window.console.log("success...");
+            //window.console.log(result.cartModel);
             //cartStatusStore = new DevExpress.data.CustomStore({
-            //    key: "cartId",
             //    load: function () {
             //        return result;
-            //    }
+            //    },
+            //    key: "cartId"
             //});
             //$("#cartStatus").dxDataGrid({
             //    dataSource: cartStatusStore

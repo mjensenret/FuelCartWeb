@@ -9,6 +9,6 @@ namespace WebApp.Infrastructure
 {
     public interface IOpenAutomationSoftware
     {
-        void LoadCartStatus();
+        List<CartStatusViewModel> LoadCartStatus();
     }
 }
